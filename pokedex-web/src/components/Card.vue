@@ -1,8 +1,8 @@
 <template>
-    <div class="card">
-      <img :src="image" alt="Imagem do Card" class="card-image" />
+    <div class="card" role="article" aria-labelledby="card-title" :style="{ backgroundColor: bgColor }">
+      <img :src="image" alt="Imagem do {{ title }}" class="card-image" />
       <div class="card-content">
-        <h3 class="card-title">{{ title }}</h3>
+        <h3 id="card-title" class="card-title">{{ title }}</h3>
         <p class="card-description">{{ description }}</p>
         <div class="card-details">
           <p class="card-weight">Peso: {{ weight }} kg</p>
@@ -36,53 +36,80 @@
         type: Number,
         required: true,
       },
+      bgColor: {
+        type: String,
+        required: false,
+        default: '#ffffff',
+      },
     },
   };
   </script>
   
   <style scoped>
   .card {
-    border: 1px solid #e0e0e0;
-    border-radius: 10px; 
+    border-radius: 15px; 
     overflow: hidden;
-    width: 220px; 
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 90%; 
+    max-width: 300px; 
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
     color: #333;
-    transition: transform 0.2s;
-    margin: 10px; 
+    transition: transform 0.2s, box-shadow 0.2s;
+    margin: 15px auto; 
   }
   
   .card:hover {
-    transform: scale(1.02);
+    transform: translateY(-5px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
   }
   
   .card-image {
     width: 100%;
-    height: 130px; 
+    height: 180px;
     object-fit: cover; 
   }
   
   .card-content {
-    padding: 12px; 
+    padding: 20px; 
   }
   
   .card-title {
-    font-size: 1.3em; 
-    margin: 0 0 6px; 
+    font-size: 1.5em;
+    margin: 0 0 8px; 
     color: #2c3e50;
+    font-family: 'Arial', sans-serif; 
   }
   
   .card-description {
-    font-size: 0.85em; 
+    font-size: 1em;
     color: #7f8c8d;
-    margin-bottom: 8px; 
+    margin-bottom: 10px; 
   }
   
   .card-details {
     display: flex;
     justify-content: space-between; 
-    font-size: 0.75em; 
+    font-size: 0.9em; 
     color: #95a5a6;
+    margin-bottom: 10px; 
+  }
+  
+  @media (max-width: 600px) {
+    .card {
+      width: 95%; 
+      margin: 10px auto; 
+    }
+  
+    .card-title {
+      font-size: 1.3em; 
+    }
+  
+    .card-description {
+      font-size: 0.9em; 
+    }
+  
+    .card-details {
+      font-size: 0.8em; 
+    }
   }
   </style>
   

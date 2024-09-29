@@ -1,10 +1,23 @@
-  <template>
-    <Pesquisa />
-  </template>
+<template>
+  <div id="app">
+    <h1>Pokédex</h1>
+    <PokemonList />
+  </div>
+</template>
 
-  <script setup lang="ts">
-  import Pesquisa from './components/Pesquisa.vue';
-  </script>
+<script>
+import PokemonList from './components/PokemonList.vue';
 
-  <style scoped>
-  </style>
+export default {
+  name: 'App',
+  components: {
+    PokemonList,
+  },
+};
+</script>
+
+<style>
+h1 {
+  margin-bottom: 200px;
+}
+</style>

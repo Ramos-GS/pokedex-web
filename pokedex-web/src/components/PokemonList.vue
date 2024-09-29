@@ -1,17 +1,18 @@
 <template>
-    <div class="pokemon-list">
-      <Card
-        v-for="pokemon in pokemons"
-        :key="pokemon.id"
-        :title="pokemon.name"
-        :description="`Num: 0${pokemon.pokedexNumber} - Tipo: ${pokemon.types.join(', ')}`"
-        :image="pokemon.image"
-        :weight="pokemon.weight"
-        :height="pokemon.height"
-        :bgColor="getColorByType(pokemon.types[0])" 
-      />
-    </div>
-  </template>
+  <div class="pokemon-list">
+    <Card
+      v-for="pokemon in pokemons"
+      :key="pokemon.id"
+      :title="pokemon.name"
+      :description="`Num: 0${pokemon.pokedexNumber} - Tipo: ${pokemon.types.join(', ')}`"
+      :image="pokemon.image"
+      :weight="pokemon.weight"
+      :height="pokemon.height"
+      :bgColor="getColorByType(pokemon.types[0])"
+      :types="pokemon.types" 
+    />
+  </div>
+</template>
   
   <script>
   import axios from 'axios';

@@ -18,6 +18,6 @@ export default {
 
 <style>
 h1 {
-  margin-bottom: 200px;
+  margin-bottom: 100px;
 }
 </style>

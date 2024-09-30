@@ -1,11 +1,18 @@
 <template>
-  <div class="card" :style="{ backgroundColor: bgColor }">
+  <div class="card" :style="{ backgroundColor: bgColor }" @click="handleClick">
     <img :src="image" alt="Imagem do Card" class="card-image" />
     <div class="card-content">
       <h3 class="card-title">{{ title }}</h3>
       <p class="card-description">{{ description }}</p>
       <div class="card-types">
-        <span v-for="(type, index) in types" :key="index" :style="{ backgroundColor: getTypeColor(type) }" class="card-type">{{ type }}</span>
+        <span
+          v-for="(type, index) in types"
+          :key="index"
+          :style="{ backgroundColor: getTypeColor(type) }"
+          class="card-type"
+        >
+          {{ type }}
+        </span>
       </div>
       <div class="card-details">
         <p class="card-weight">Peso: {{ weight }} kg</p>
@@ -71,6 +78,9 @@ export default {
         normal: '#BDC3C7', 
       };
       return typeColors[type] || '#BDC3C7'; 
+    },
+    handleClick() {
+      this.$emit('click');  // Emite o evento de clique para o componente pai
     },
   },
 };

@@ -1,7 +1,8 @@
 <template>
   <div class="pokemon-list">
+    <SearchFilter @search="searchPokemons" @filter="filterPokemons" />
     <Card
-      v-for="pokemon in pokemons"
+      v-for="pokemon in filteredPokemons"
       :key="pokemon.id"
       :title="pokemon.name"
       :description="`Num: 0${pokemon.pokedexNumber}`"
@@ -20,16 +21,19 @@
 import axios from 'axios';
 import Card from './Card.vue';
 import Modal from './Modal.vue'; 
+import SearchFilter from './SearchFilter.vue';
 
 export default {
   name: 'PokemonList',
   components: {
     Card,
     Modal, 
+    SearchFilter,
   },
   data() {
     return {
       pokemons: [],
+      filteredPokemons: [],
       selectedPokemon: null,
       typeColors: {
         fire: '#FFCCBC',
@@ -51,10 +55,13 @@ export default {
         fairy: '#F1BEE7',
         normal: '#FFFFFF',
       },
+      searchQuery: '',
+      selectedTypes: [],
     };
   },
   async created() {
     await this.fetchPokemons();
+    this.filteredPokemons = this.pokemons; // Inicializa a lista filtrada
   },
   methods: {
     async fetchPokemons() {
@@ -74,6 +81,7 @@ export default {
             };
           })
         );
+        this.filteredPokemons = this.pokemons; // Atualiza a lista filtrada após buscar os Pokémon
       } catch (error) {
         console.error('Erro ao buscar Pokémon:', error);
       }
@@ -86,6 +94,23 @@ export default {
     },
     closeModal() {
       this.selectedPokemon = null;  
+    },
+    searchPokemons(query) {
+      this.searchQuery = query.toLowerCase();
+      this.applyFilters(); // Atualiza a filtragem após a busca
+    },
+    filterPokemons(types) {
+      this.selectedTypes = types;
+      this.applyFilters(); // Atualiza a filtragem após a seleção de tipos
+    },
+    applyFilters() {
+      this.filteredPokemons = this.pokemons.filter(pokemon => {
+        const matchesSearch = pokemon.name.toLowerCase().includes(this.searchQuery) || 
+                              pokemon.pokedexNumber.toString().includes(this.searchQuery);
+        const matchesType = this.selectedTypes.length === 0 || 
+                            this.selectedTypes.some(type => pokemon.types.includes(type));
+        return matchesSearch && matchesType; // Filtra com base na busca e no tipo
+      });
     },
   },
 };

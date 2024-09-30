@@ -22,17 +22,13 @@
           </span>
         </div>
   
-        <!-- Descrição -->
-        <p class="pokemon-description">{{ description }}</p>
-  
         <!-- Medidas: Altura e Peso -->
-<div class="pokemon-measurements">
-  <div class="measurements-container">
-    <p><strong>Altura:</strong> {{ pokemon.height }} m</p>
-    <p><strong>Peso:</strong> {{ pokemon.weight }} kg</p>
-  </div>
-</div>
-
+        <div class="pokemon-measurements">
+          <div class="measurements-container">
+            <p><strong>Altura:</strong> {{ pokemon.height }} m</p>
+            <p><strong>Peso:</strong> {{ pokemon.weight }} kg</p>
+          </div>
+        </div>
   
         <!-- Fraquezas -->
         <div class="pokemon-weaknesses">
@@ -66,18 +62,18 @@
           </ul>
         </div>
   
-        <!-- Evolução -->
-<div class="pokemon-evolution" v-if="evolutionChain.length">
-  <h4>Evoluções</h4>
-  <div class="evolution-chain">
-    <div v-for="(evolution, index) in evolutionChain" :key="evolution.name" class="evolution-item">
-      <img :src="evolution.image" :alt="evolution.name" class="evolution-image" />
-      <div class="evolution-level" v-if="evolution.level">
-        Lvl {{ evolution.level }}
-      </div>
-    </div>
-  </div>
-</div>
+
+        <div class="pokemon-evolution" v-if="evolutionChain.length">
+          <h4>Evoluções</h4>
+          <div class="evolution-chain">
+            <div v-for="(evolution, index) in evolutionChain" :key="evolution.name" class="evolution-item">
+              <img :src="evolution.image" :alt="evolution.name" class="evolution-image" />
+              <div class="evolution-level" v-if="evolution.level">
+                Lvl {{ evolution.level }}
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </template>
@@ -100,7 +96,6 @@
     data() {
       return {
         stats: {},
-        description: '',
         weaknesses: [],
         evolutionChain: [],
       };
@@ -122,8 +117,7 @@
           };
   
           const speciesResponse = await axios.get(`https://pokeapi.co/api/v2/pokemon-species/${this.pokemon.id}`);
-          this.description = speciesResponse.data.flavor_text_entries.find(entry => entry.language.name === 'en').flavor_text;
-  
+          
           const evolutionUrl = speciesResponse.data.evolution_chain.url;
           const evolutionResponse = await axios.get(evolutionUrl);
           this.evolutionChain = this.formatEvolutionChain(evolutionResponse.data.chain);
@@ -192,17 +186,16 @@
   </script>
   
   <style scoped>
-.measurements-container {
-  display: flex;
-  justify-content: space-around;
-  margin: 10px 0; /* Margem vertical para separar do restante */
-}
-
-.measurements-container p {
-  margin: 0; /* Remove margens padrão */
-}
-
-
+  .measurements-container {
+    display: flex;
+    justify-content: space-around;
+    margin: 10px 0;
+  }
+  
+  .measurements-container p {
+    margin: 0;
+  }
+  
   .modal {
     position: fixed;
     top: 0;
@@ -231,16 +224,16 @@
     border-radius: 15px;
     position: relative;
     z-index: 10;
-    width: 90%;
-    max-width: 500px;
+    width: 90%; /* Você pode aumentar para 95% se desejar */
+    max-width: 600px; /* Aumente este valor para uma largura maior */
     text-align: center;
-    overflow-y: auto;
+    overflow-y: auto; /* Evita a barra de rolagem */
     max-height: 90%;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     transition: all 0.3s ease-in-out;
     color: black; 
-  }
-  
+}
+
   .pokemon-image {
     width: 100%;
     max-width: 220px;
@@ -332,28 +325,28 @@
   }
   
   .evolution-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 40px; /* Adiciona espaço entre as evoluções */
-}
-
-.evolution-image {
-  width: 80px;
-  height: auto;
-  border-radius: 10px;
-}
-
-.evolution-level {
-  background-color: white; /* Cor de fundo da caixa do nível */
-  border-radius: 12px; /* Borda arredondada */
-  padding: 5px 10px; /* Espaçamento interno */
-  margin-top: 5px; /* Espaçamento entre a imagem e o nível */
-  font-weight: bold; /* Negrito para o texto */
-  color: black; /* Cor do texto em preto */
-  text-align: center; /* Centraliza o texto */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Sombra sutil */
-}
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 40px; /* Adiciona espaço entre as evoluções */
+  }
+  
+  .evolution-image {
+    width: 80px;
+    height: auto;
+    border-radius: 10px;
+  }
+  
+  .evolution-level {
+    background-color: white; /* Cor de fundo da caixa do nível */
+    border-radius: 12px; /* Borda arredondada */
+    padding: 5px 10px; /* Espaçamento interno */
+    margin-top: 5px; /* Espaçamento entre a imagem e o nível */
+    font-weight: bold; /* Negrito para o texto */
+    color: black; /* Cor do texto em preto */
+    text-align: center; /* Centraliza o texto */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Sombra sutil */
+  }
   
   @media (max-width: 768px) {
     .modal-content {

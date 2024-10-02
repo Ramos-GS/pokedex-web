@@ -224,10 +224,10 @@
     border-radius: 15px;
     position: relative;
     z-index: 10;
-    width: 90%; /* Você pode aumentar para 95% se desejar */
-    max-width: 600px; /* Aumente este valor para uma largura maior */
+    width: 90%; 
+    max-width: 600px; 
     text-align: center;
-    overflow-y: auto; /* Evita a barra de rolagem */
+    overflow-y: auto; 
     max-height: 90%;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     transition: all 0.3s ease-in-out;
@@ -266,7 +266,7 @@
     display: inline-block;
     padding: 8px 12px;
     border-radius: 20px;
-    color: rgb(0, 0, 0); /* Cor das letras em tons de preto */
+    color: rgb(0, 0, 0); 
     margin: 5px;
     font-weight: bold;
     transition: transform 0.2s;
@@ -328,7 +328,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 40px; /* Adiciona espaço entre as evoluções */
+    margin: 40px; 
   }
   
   .evolution-image {
@@ -338,14 +338,14 @@
   }
   
   .evolution-level {
-    background-color: white; /* Cor de fundo da caixa do nível */
-    border-radius: 12px; /* Borda arredondada */
-    padding: 5px 10px; /* Espaçamento interno */
-    margin-top: 5px; /* Espaçamento entre a imagem e o nível */
-    font-weight: bold; /* Negrito para o texto */
-    color: black; /* Cor do texto em preto */
-    text-align: center; /* Centraliza o texto */
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Sombra sutil */
+    background-color: white; 
+    border-radius: 12px; 
+    padding: 5px 10px; 
+    margin-top: 5px; 
+    font-weight: bold; 
+    color: black; 
+    text-align: center; 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); 
   }
   
   @media (max-width: 768px) {

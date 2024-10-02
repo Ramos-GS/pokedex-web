@@ -47,7 +47,7 @@ Para configurar o projeto em sua máquina local, siga os passos abaixo:
 
 1. **Clonar o repositório**:
    ```bash
-   git clone <URL do seu repositório>
+   git clone <https://github.com/Ramos-GS/pokedex-web.git>
    ```
 2. **Entrar na pasta do projeto**:
     ```bash

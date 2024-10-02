@@ -1,5 +1,5 @@
 <template>
-  <div class="card" :style="{ backgroundColor: bgColor }" @click="handleClick">
+  <div class="card" :style="{ background: bgColor }" @click="handleClick">
     <img :src="image" alt="Imagem do Card" class="card-image" />
     <div class="card-content">
       <h3 class="card-title">{{ title }}</h3>
@@ -15,8 +15,14 @@
         </span>
       </div>
       <div class="card-details">
-        <p class="card-weight">Peso: {{ weight }} kg</p>
-        <p class="card-height">Altura: {{ height }} m</p>
+        <div class="card-detail">
+          <i class="fas fa-weight"></i>
+          <p class="card-weight">{{ weight }} kg</p>
+        </div>
+        <div class="card-detail">
+          <i class="fas fa-ruler-vertical"></i>
+          <p class="card-height">{{ height }} m</p>
+        </div>
       </div>
     </div>
   </div>
@@ -80,7 +86,7 @@ export default {
       return typeColors[type] || '#BDC3C7'; 
     },
     handleClick() {
-      this.$emit('click');  // Emite o evento de clique para o componente pai
+      this.$emit('click');
     },
   },
 };
@@ -92,21 +98,24 @@ export default {
   overflow: hidden;
   width: 90%;
   max-width: 300px;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
   color: #333;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition: transform 0.3s, box-shadow 0.3s;
   margin: 15px auto;
+  text-align: center;
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.8), rgba(230, 230, 230, 0.8)); 
 }
 
 .card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+  transform: translateY(-5px) scale(1.02); 
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
 }
 
 .card-image {
   width: 100%;
   height: 180px;
   object-fit: cover;
+  border-bottom: 4px solid rgba(0, 0, 0, 0.1); 
 }
 
 .card-content {
@@ -114,10 +123,11 @@ export default {
 }
 
 .card-title {
-  font-size: 1.5em;
+  font-size: 1.6em;
   margin: 0 0 8px;
   color: #2c3e50;
   font-family: 'Arial', sans-serif;
+  text-shadow: 1px 1px 1px rgba(255, 255, 255, 0.7); 
 }
 
 .card-description {
@@ -128,12 +138,13 @@ export default {
 
 .card-types {
   display: flex;
+  justify-content: center;
   flex-wrap: wrap;
   margin-bottom: 10px;
 }
 
 .card-type {
-  color: white; /* Texto branco para maior contraste */
+  color: white;
   border-radius: 5px;
   padding: 5px 10px;
   margin-right: 5px;
@@ -142,10 +153,27 @@ export default {
 
 .card-details {
   display: flex;
-  justify-content: space-between;
-  font-size: 0.9em;
-  color: #95a5a6;
-  margin-bottom: 10px;
+  justify-content: center;
+  margin: 10px 0;
+}
+
+.card-detail {
+  display: flex;
+  align-items: center;
+  margin: 0 10px;
+}
+
+.card-weight,
+.card-height {
+  font-size: 1.2em; 
+  font-weight: bold; 
+  color: #34495e; 
+}
+
+.card-weight i,
+.card-height i {
+  margin-right: 5px;
+  color: #34495e;
 }
 
 /* Media queries para responsividade */
@@ -164,7 +192,7 @@ export default {
   }
 
   .card-details {
-    font-size: 0.8em;
+    font-size: 1em;
   }
 }
 </style>

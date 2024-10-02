@@ -1,6 +1,9 @@
 <template>
   <div class="pokemon-list">
+    <!-- Componente de filtro de busca e tipos -->
     <SearchFilter @search="searchPokemons" @filter="filterPokemons" />
+    
+    <!-- Loop pelos Pokémon filtrados, exibindo o componente Card para cada um -->
     <Card
       v-for="pokemon in filteredPokemons"
       :key="pokemon.id"
@@ -13,6 +16,8 @@
       :types="pokemon.types"
       @click.native="selectPokemon(pokemon)" 
     />
+
+    <!-- Componente de Modal, exibido apenas se um Pokémon for selecionado -->
     <Modal v-if="selectedPokemon" :isOpen="!!selectedPokemon" :pokemon="selectedPokemon" @close="closeModal" />
   </div>
 </template>
@@ -32,10 +37,10 @@ export default {
   },
   data() {
     return {
-      pokemons: [],
-      filteredPokemons: [],
-      selectedPokemon: null,
-      typeColors: {
+      pokemons: [], // Armazena a lista de todos os Pokémon
+      filteredPokemons: [], // Armazena os Pokémon filtrados
+      selectedPokemon: null, // Pokémon atualmente selecionado
+      typeColors: { // Cores associadas a cada tipo de Pokémon
         fire: '#FFCCBC',
         water: '#BBDEFB',
         grass: '#C8E6C9',
@@ -55,18 +60,21 @@ export default {
         fairy: '#F1BEE7',
         normal: '#FFFFFF',
       },
-      searchQuery: '',
-      selectedTypes: [],
+      searchQuery: '', // Consulta de pesquisa (busca)
+      selectedTypes: [], // Tipos de Pokémon selecionados para filtragem
     };
   },
   async created() {
+    // Busca os dados dos Pokémon ao criar o componente
     await this.fetchPokemons();
-    this.filteredPokemons = this.pokemons; // Inicializa a lista filtrada
+    this.filteredPokemons = this.pokemons; // Inicializa a lista filtrada com todos os Pokémon
   },
   methods: {
+    // Função para buscar Pokémon da PokeAPI
     async fetchPokemons() {
       try {
         const response = await axios.get('https://pokeapi.co/api/v2/pokemon?limit=151');
+        // Para cada Pokémon, busca os detalhes adicionais
         this.pokemons = await Promise.all(
           response.data.results.map(async (pokemon) => {
             const detailResponse = await axios.get(pokemon.url);
@@ -75,41 +83,54 @@ export default {
               pokedexNumber: detailResponse.data.id,
               name: detailResponse.data.name,
               image: detailResponse.data.sprites.front_default,
-              weight: (detailResponse.data.weight / 10).toFixed(1),
-              height: (detailResponse.data.height / 10).toFixed(1),
-              types: detailResponse.data.types.map(type => type.type.name),
+              weight: (detailResponse.data.weight / 10).toFixed(1), // Converte peso de decigramas para kg
+              height: (detailResponse.data.height / 10).toFixed(1), // Converte altura de decímetros para metros
+              types: detailResponse.data.types.map(type => type.type.name), // Extrai os tipos do Pokémon
             };
           })
         );
-        this.filteredPokemons = this.pokemons; // Atualiza a lista filtrada após buscar os Pokémon
+        // Atualiza a lista de Pokémon filtrada após a busca inicial
+        this.filteredPokemons = this.pokemons;
       } catch (error) {
         console.error('Erro ao buscar Pokémon:', error);
       }
     },
+
+    // Função que retorna a cor de fundo baseada no tipo de Pokémon
     getColorByType(type) {
-      return this.typeColors[type] || '#FFFFFF'; 
+      return this.typeColors[type] || '#FFFFFF'; // Retorna cor padrão se o tipo não for encontrado
     },
+
+    // Define o Pokémon selecionado ao clicar no Card
     selectPokemon(pokemon) {
       this.selectedPokemon = pokemon;  
     },
+
+    // Fecha o modal do Pokémon
     closeModal() {
       this.selectedPokemon = null;  
     },
+
+    // Realiza busca com base na consulta inserida
     searchPokemons(query) {
       this.searchQuery = query.toLowerCase();
-      this.applyFilters(); // Atualiza a filtragem após a busca
+      this.applyFilters(); // Aplica a filtragem com base na consulta e nos tipos
     },
+
+    // Filtra Pokémon pelos tipos selecionados
     filterPokemons(types) {
       this.selectedTypes = types;
-      this.applyFilters(); // Atualiza a filtragem após a seleção de tipos
+      this.applyFilters(); // Aplica a filtragem com base na consulta e nos tipos
     },
+
+    // Aplica a filtragem tanto para a busca quanto para os tipos selecionados
     applyFilters() {
       this.filteredPokemons = this.pokemons.filter(pokemon => {
         const matchesSearch = pokemon.name.toLowerCase().includes(this.searchQuery) || 
                               pokemon.pokedexNumber.toString().includes(this.searchQuery);
         const matchesType = this.selectedTypes.length === 0 || 
                             this.selectedTypes.some(type => pokemon.types.includes(type));
-        return matchesSearch && matchesType; // Filtra com base na busca e no tipo
+        return matchesSearch && matchesType; // Retorna apenas os Pokémon que correspondem à busca e ao tipo
       });
     },
   },

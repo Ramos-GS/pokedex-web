@@ -45,3 +45,19 @@ O objetivo deste projeto foi desenvolver uma aplicação que funcione como uma *
 
 Para configurar o projeto em sua máquina local, siga os passos abaixo:
 
+1. **Clonar o repositório**:
+   ```bash
+   git clone <URL do seu repositório>
+   ```
+2. **Entrar na pasta do projeto**:
+    ```bash
+    cd pokedex-web
+    ```
+3. **Instalar as dependências**:
+     ```bash
+    npm install
+    ```
+4. **Iniciar o servidor de desenvolvimento**:
+     ```bash
+    npm run dev
+    ```
